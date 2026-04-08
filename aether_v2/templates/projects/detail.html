@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }}{% endblock %}
+{% block content %}
+<div class="fade-up" style="margin-bottom:20px"><a href="{% url 'project_list' %}" class="back-link">&#x2190; projects</a></div>
+<div class="glass fade-up d1" style="padding:36px;max-width:800px">
+  <div class="card-top" style="margin-bottom:16px">
+    <h1 style="font-size:clamp(22px,3vw,32px);letter-spacing:-.02em">{{ project.title }}</h1>
+    <span class="badge badge-{{ project.status }}">{{ project.get_status_display }}</span>
+  </div>
+  {% if project.tags.all %}<div class="tag-row" style="margin-bottom:20px">{% for t in project.tags.all %}<span class="badge badge-tag">{{ t.name }}</span>{% endfor %}</div>{% endif %}
+  <div class="divider"></div>
+  <p style="color:var(--text-dim);line-height:1.8;margin-top:20px">{{ project.description }}</p>
+  {% if project.live_url or project.repo_url %}
+  <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap">
+    {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live Site</a>{% endif %}
+    {% if project.repo_url %}<a href="{{ project.repo_url }}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Source</a>{% endif %}
+  </div>
+  {% endif %}
+  <div class="divider" style="margin-top:24px"></div>
+  <p style="font-family:var(--fm);font-size:11px;color:var(--text-muted)">Created {{ project.created_at|date:"N j, Y" }}</p>
+</div>
+{% endblock %}

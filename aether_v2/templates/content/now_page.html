@@ -1,0 +1,11 @@
+{% load wagtailcore_tags %}{% extends "base.html" %}
+{% block title %}Now{% endblock %}
+{% block content %}
+<div class="page-header fade-up">
+  <h1>Now</h1>
+  {% if page.updated_note %}<p>{{ page.updated_note }}</p>{% endif %}
+</div>
+<div class="glass fade-up d1" style="padding:36px;max-width:680px">
+  <div style="color:var(--text-dim);line-height:1.9;font-size:15px">{{ page.body|richtext }}</div>
+</div>
+{% endblock %}

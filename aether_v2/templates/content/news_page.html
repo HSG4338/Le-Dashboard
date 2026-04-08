@@ -1,0 +1,11 @@
+{% load wagtailcore_tags %}{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block content %}
+<div class="fade-up" style="margin-bottom:20px"><a href="{{ page.get_parent.url }}" class="back-link">&#x2190; news</a></div>
+<div class="glass fade-up d1" style="padding:40px;max-width:720px">
+  <h1 style="font-size:clamp(22px,3vw,32px);letter-spacing:-.02em;margin-bottom:8px">{{ page.title }}</h1>
+  <p style="font-family:var(--fm);font-size:11px;color:var(--text-muted);margin-bottom:24px">{{ page.first_published_at|date:"N j, Y" }}</p>
+  <div class="divider"></div>
+  <div style="color:var(--text-dim);line-height:1.85;font-size:15px;margin-top:24px">{{ page.body|richtext }}</div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}{{ site_settings.site_title|default:"Aether" }}{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+{% if site_settings.wallpaper %}<div class="wallpaper" style="background-image:url('{{ site_settings.wallpaper.url }}')"></div>{% endif %}
+<div class="overlay"></div>
+<div id="app">
+  <nav>
+    <div class="nav-inner">
+      <a href="{% url 'home' %}" class="logo">æther<em>.</em></a>
+      <ul class="nav-links">
+        <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>home</a></li>
+        <li><a href="{% url 'project_list' %}" {% if 'project' in request.resolver_match.url_name|default:'' %}class="active"{% endif %}>projects</a></li>
+        <li><a href="{% url 'link_list' %}" {% if 'link' in request.resolver_match.url_name|default:'' %}class="active"{% endif %}>links</a></li>
+        <li><a href="{% url 'activity_feed' %}" {% if 'activity' in request.resolver_match.url_name|default:'' %}class="active"{% endif %}>log</a></li>
+        <li><a href="{% url 'suggestions' %}" {% if 'suggestion' in request.resolver_match.url_name|default:'' %}class="active"{% endif %}>say hi</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main>
+    <div class="container">
+      {% if messages %}<ul class="messages">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>{% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  <footer>
+    <div class="nav-inner">
+      <span>© {% now "Y" %} {{ site_settings.site_title|default:"Aether" }}</span>
+      <div class="footer-links">
+        {% if site_settings.github_url %}<a href="{{ site_settings.github_url }}" target="_blank" rel="noopener">github</a>{% endif %}
+        {% if site_settings.twitter_url %}<a href="{{ site_settings.twitter_url }}" target="_blank" rel="noopener">twitter</a>{% endif %}
+        {% if site_settings.email %}<a href="mailto:{{ site_settings.email }}">email</a>{% endif %}
+      </div>
+    </div>
+  </footer>
+</div>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

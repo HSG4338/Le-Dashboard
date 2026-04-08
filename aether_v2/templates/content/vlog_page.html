@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block content %}
+<div class="fade-up" style="margin-bottom:20px"><a href="{{ page.get_parent.url }}" class="back-link">&#x2190; vlog</a></div>
+<div class="glass fade-up d1" style="padding:36px;max-width:800px">
+  <h1 style="font-size:clamp(20px,3vw,30px);letter-spacing:-.02em;margin-bottom:20px">{{ page.title }}</h1>
+  <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;margin-bottom:20px">
+    <iframe src="{{ page.video_url }}" style="position:absolute;inset:0;width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe>
+  </div>
+  {% if page.description %}<div style="color:var(--text-dim);line-height:1.8;font-size:14px">{{ page.description|richtext }}</div>{% endif %}
+</div>
+{% endblock %}

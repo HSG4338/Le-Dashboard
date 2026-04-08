@@ -1,0 +1,12 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 Not Found</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/main.css' %}"></head>
+<body><div class="overlay"></div>
+<div id="app" style="display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center">
+  <div><p style="font-family:var(--fm);font-size:11px;color:var(--accent);letter-spacing:.1em;margin-bottom:12px">ERROR 404</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(48px,8vw,96px);font-weight:800;letter-spacing:-.04em">Not Found</h1>
+  <p style="color:var(--text-dim);margin-top:12px">This page doesn't exist.</p>
+  <a href="/" class="btn btn-primary" style="margin-top:28px;display:inline-flex">Go Home</a></div>
+</div></body></html>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Activity Log{% endblock %}
+{% block content %}
+<div class="page-header fade-up"><h1>Activity Log</h1><p>A record of recent activity.</p></div>
+<div class="glass fade-up d1" style="padding:4px 20px">
+  {% for log in logs %}
+  <div class="activity-item">
+    <div class="adot adot-{{ log.action_type|slice:':6' }}"></div>
+    <span class="adesc">{{ log.description }}</span>
+    <span class="atime">{{ log.timestamp|timesince }} ago</span>
+  </div>
+  {% empty %}
+  <div style="padding:40px;text-align:center"><p style="color:var(--text-muted);font-family:var(--fm)">No activity yet.</p></div>
+  {% endfor %}
+</div>
+{% endblock %}

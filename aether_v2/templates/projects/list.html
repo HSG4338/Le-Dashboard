@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block content %}
+<div class="page-header fade-up">
+  <h1>Projects</h1>
+  <p>Things I've built, am building, or paused for later.</p>
+</div>
+<div class="filter-bar fade-up d1" id="filter-bar">
+  <a href="{% url 'project_list' %}" class="filter-chip {% if not status_filter and not tag_filter %}active{% endif %}" hx-get="{% url 'project_list' %}" hx-target="#project-results" hx-push-url="{% url 'project_list' %}">all</a>
+  {% for val, label in status_choices %}
+  <a href="?status={{ val }}" class="filter-chip {% if status_filter == val %}active{% endif %}" hx-get="{% url 'project_list' %}?status={{ val }}" hx-target="#project-results" hx-push-url="?status={{ val }}">{{ label|lower }}</a>
+  {% endfor %}
+  {% if tags %}<span class="filter-sep">|</span>{% for tag in tags %}<a href="?tag={{ tag.slug }}" class="filter-chip {% if tag_filter == tag.slug %}active{% endif %}" hx-get="{% url 'project_list' %}?tag={{ tag.slug }}" hx-target="#project-results" hx-push-url="?tag={{ tag.slug }}">#{{ tag.name }}</a>{% endfor %}{% endif %}
+</div>
+<div id="project-results" class="fade-up d2">{% include "projects/_grid.html" %}</div>
+{% endblock %}
+{% block extra_js %}
+<script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js" defer></script>
+<script>document.body.addEventListener('htmx:afterRequest',function(e){if(e.detail.elt.closest('#filter-bar')){document.querySelectorAll('#filter-bar .filter-chip').forEach(el=>el.classList.remove('active'));e.detail.elt.classList.add('active');}});</script>
+{% endblock %}

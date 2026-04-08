@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ site_settings.site_title|default:"Aether" }}{% endblock %}
+{% block content %}
+<section class="hero fade-up">
+  <p class="hero-tag">// hello, world</p>
+  <h1 class="hero-title">Building things<br>that <span class="accent">matter.</span></h1>
+  <p class="hero-sub">{{ site_settings.tagline|default:"Developer. Builder. This is my corner of the internet." }}</p>
+  <div class="hero-actions">
+    <a href="{% url 'project_list' %}" class="btn btn-primary">View Projects</a>
+    <a href="{% url 'suggestions' %}" class="btn btn-ghost">Say Hello</a>
+  </div>
+</section>
+
+{% if projects %}
+<section class="fade-up d2">
+  <p class="section-label">Recent Projects</p>
+  <div class="grid-3">
+    {% for p in projects %}
+    <a href="{% url 'project_detail' p.slug %}" class="glass project-card">
+      <div class="card-top">
+        <span class="card-title">{{ p.title }}</span>
+        <span class="badge badge-{{ p.status }}">{{ p.get_status_display }}</span>
+      </div>
+      <p class="card-desc">{{ p.description|truncatewords:20 }}</p>
+      {% if p.tags.all %}<div class="tag-row">{% for t in p.tags.all %}<span class="badge badge-tag">{{ t.name }}</span>{% endfor %}</div>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+  <div style="margin-top:16px"><a href="{% url 'project_list' %}" class="btn btn-ghost btn-sm">All projects →</a></div>
+</section>
+{% endif %}
+
+{% if recent_activity %}
+<section class="fade-up d3" style="margin-top:40px">
+  <p class="section-label">Recent Activity</p>
+  <div class="glass" style="padding:4px 20px">
+    {% for log in recent_activity %}
+    <div class="activity-item">
+      <div class="adot adot-{{ log.action_type|slice:':6' }}"></div>
+      <span class="adesc">{{ log.description }}</span>
+      <span class="atime">{{ log.timestamp|timesince }} ago</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

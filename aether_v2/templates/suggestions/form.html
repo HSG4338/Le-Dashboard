@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Say Hi{% endblock %}
+{% block content %}
+<div class="container-sm">
+  <div class="page-header fade-up"><h1>Say Hi</h1><p>Share a thought, idea, or feedback.</p></div>
+  <div class="glass fade-up d1" style="padding:32px">
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">Name (optional)</label>
+        {{ form.name }}
+        {% if form.name.errors %}<ul class="errorlist">{% for e in form.name.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.message.id_for_label }}">Message *</label>
+        {{ form.message }}
+        {% if form.message.errors %}<ul class="errorlist">{% for e in form.message.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

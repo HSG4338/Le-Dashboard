@@ -1,0 +1,17 @@
+{% if projects %}
+<div class="grid-2" id="projects-grid">
+  {% for p in projects %}
+  <a href="{% url 'project_detail' p.slug %}" class="glass project-card fade-up">
+    <div class="card-top">
+      <span class="card-title">{{ p.title }}</span>
+      <span class="badge badge-{{ p.status }}">{{ p.get_status_display }}</span>
+    </div>
+    <p class="card-desc">{{ p.description|truncatewords:25 }}</p>
+    {% if p.tags.all %}<div class="tag-row">{% for t in p.tags.all %}<span class="badge badge-tag">{{ t.name }}</span>{% endfor %}</div>{% endif %}
+    {% if p.live_url or p.repo_url %}<div class="card-links">{% if p.live_url %}<span>&#x2197; live</span>{% endif %}{% if p.repo_url %}<span>&#x2325; repo</span>{% endif %}</div>{% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="glass empty-state"><p>No projects match that filter.</p></div>
+{% endif %}

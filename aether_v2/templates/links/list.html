@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Links{% endblock %}
+{% block content %}
+<div class="page-header fade-up"><h1>Links</h1><p>A curated collection of tools and resources.</p></div>
+{% for cat in categories %}{% if cat.links.all %}
+<div class="link-section fade-up">
+  <p class="link-section-title">{% if cat.icon %}{{ cat.icon }} {% endif %}{{ cat.name }}</p>
+  <div class="link-grid">
+    {% for link in cat.links.all %}
+    <a href="{{ link.url }}" target="_blank" rel="noopener" class="link-item">
+      <div class="link-item-title">{{ link.title }}</div>
+      {% if link.description %}<div class="link-item-desc">{{ link.description }}</div>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}{% endfor %}
+{% if uncategorized %}
+<div class="link-section fade-up">
+  <p class="link-section-title">misc</p>
+  <div class="link-grid">{% for link in uncategorized %}<a href="{{ link.url }}" target="_blank" rel="noopener" class="link-item"><div class="link-item-title">{{ link.title }}</div>{% if link.description %}<div class="link-item-desc">{{ link.description }}</div>{% endif %}</a>{% endfor %}</div>
+</div>
+{% endif %}
+{% if not categories and not uncategorized %}<div class="glass empty-state"><p>No links yet.</p></div>{% endif %}
+{% endblock %}
